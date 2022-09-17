@@ -7,6 +7,7 @@ const photoGallery = galleryItems
             <img
                 class="gallery__image"
                 src="${preview}"
+                data-source="${original}"
                 alt="'${description}'"
             />
             </a>`;
@@ -20,5 +21,15 @@ const escapeCloseModal = (event) => {
     document.querySelector('.basicLightbox').remove();
 } return;  
 };
+
+const clickImg = (evt) => {
+    evt.preventDefault();
+    window.addEventListener('keydown', escapeCloseModal);
+    if (!evt.target.classList.contains("gallery__image")) { return; }
+    const instance = basicLightbox
+        .create(`<img  src="${evt.target.dataset.source}"></img>`)
+    instance.show()
+}; 
+gallery.addEventListener('click', clickImg);
 
 console.log(galleryItems);
